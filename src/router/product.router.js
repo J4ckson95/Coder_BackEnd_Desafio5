@@ -11,5 +11,15 @@ router.post("/", async (req, res) => {
     const result = await productModel.create(newProduct)
     res.status({ status: "Success", payload: result })
 })
-
+router.get("/:idp", async (req, res) => {
+    const idProduct = req.params.idp
+    const searchProduct = await productModel.find({ _id: idProduct }).lean()
+    res.status({ status: "Success", payload: searchProduct })
+})
+router.put("/:idp", async (req, res) => {
+    const idProduct = req.params.idp
+    const newData = req.body
+    const updateProduct = await productModel.updateOne({ _id: idProduct }, newData)
+    res.status({ status: "Success", payload: updateProduct })
+})
 export default router
