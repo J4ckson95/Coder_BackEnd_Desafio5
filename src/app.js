@@ -24,7 +24,8 @@ app.get("/chat", (req, res) => {
 const io = new Server(httpServer)
 io.on("connection", (socket) => {
     socket.on("message", async (data) => {
-        const saveMessage = await messageModel.create(data)
+        await messageModel.create(data)
+        io.emit("logs", data)
     })
 })
 mongoose.connect(url, { dbName: "ecommerce" })

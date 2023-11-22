@@ -14,18 +14,20 @@ Swal.fire({
 chatInput.addEventListener('keypress', function (event) {
     if (event.key === 'Enter') {
         const messageText = chatInput.value.trim();
-        sendMessage(messageText);
         socket.emit("message", { user, message: messageText })
     }
 });
 
-function sendMessage(messageText) {
-    if (messageText !== '') {
+socket.on("logs", (data) => {
+    console.log(data)
+    let { user, message } = data
+    console.log(user, message)
+    if (message !== '') {
         const messageElement = document.createElement('div');
         messageElement.className = 'message';
-        messageElement.innerHTML = `<p><i>${user}</i>:<i>${messageText}</i></p>`;
+        messageElement.innerHTML = `<p><i>${user}</i>:<i>${message}</i></p>`;
         chatMessages.appendChild(messageElement);
         chatInput.value = '';
         chatMessages.scrollTop = chatMessages.scrollHeight;
     }
-}
+})

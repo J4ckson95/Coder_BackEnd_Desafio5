@@ -13,13 +13,18 @@ router.post("/", async (req, res) => {
 })
 router.get("/:idp", async (req, res) => {
     const idProduct = req.params.idp
-    const searchProduct = await productModel.find({ _id: idProduct }).lean()
-    res.status({ status: "Success", payload: searchProduct })
+    const result = await productModel.find({ _id: idProduct }).lean()
+    res.status({ status: "Success", payload: result })
 })
 router.put("/:idp", async (req, res) => {
     const idProduct = req.params.idp
     const newData = req.body
-    const updateProduct = await productModel.updateOne({ _id: idProduct }, newData)
-    res.status({ status: "Success", payload: updateProduct })
+    const result = await productModel.updateOne({ _id: idProduct }, newData)
+    res.status({ status: "Success", payload: result })
+})
+router.delete("/:idp", async (req, res) => {
+    const idProduct = req.params.idp
+    const result = await productModel.deleteOne({ _id: idProduct })
+    res.status({ status: "Success", payload: result })
 })
 export default router
